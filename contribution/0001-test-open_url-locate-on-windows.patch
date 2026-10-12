@@ -1,0 +1,52 @@
+diff --git a/tests/test_termui.py b/tests/test_termui.py
+index 1825b19..3bdc255 100644
+--- a/tests/test_termui.py
++++ b/tests/test_termui.py
+@@ -1982,3 +1982,47 @@ def test_hide_input_value_never_leaks_when_err_true(runner):
+     result = runner.invoke(cli, input="leaky\n", mix_stderr=False)
+     assert "leaky" not in result.stdout
+     assert "leaky" not in result.stderr
++
++
++@pytest.mark.parametrize(
++    "path",
++    [
++        pytest.param(r"C:\Users\Public\click-demo", id="no spaces"),
++        pytest.param(r"C:\Users\Public\click demo", id="space in name"),
++        pytest.param(r"C:\Program Files\My App\a b.txt", id="spaces in many parts"),
++    ],
++)
++def test_open_url_locate_windows_passes_select_as_separate_argument(monkeypatch, path):
++    """``open_url(..., locate=True)`` on Windows hands Explorer ``/select,``
++    and the path as two separate arguments.
++
++    :func:`subprocess.list2cmdline` quotes a whole argument that contains a
++    space. A combined ``/select,<path>`` argument would become
++    ``"/select,<path>"``, which Explorer does not parse, so it opens the
++    Documents folder instead of selecting the target. See #2994.
++    """
++    calls = []
++    monkeypatch.setattr(click._termui_impl, "WIN", True)
++    monkeypatch.setattr(
++        subprocess, "call", lambda args, **kwargs: calls.append(args) or 0
++    )
++
++    assert click.launch(path, locate=True) == 0
++
++    assert calls == [["explorer", "/select,", path]]
++    cmdline = subprocess.list2cmdline(calls[0])
++    assert cmdline.startswith("explorer /select, ")
++    assert '"/select,' not in cmdline
++
++
++def test_open_url_locate_windows_unquotes_file_url(monkeypatch):
++    """A ``file://`` URL is percent-decoded before it is passed to Explorer."""
++    calls = []
++    monkeypatch.setattr(click._termui_impl, "WIN", True)
++    monkeypatch.setattr(
++        subprocess, "call", lambda args, **kwargs: calls.append(args) or 0
++    )
++
++    click.launch("file://C:/Users/Public/click%20demo", locate=True)
++
++    assert calls == [["explorer", "/select,", "C:/Users/Public/click demo"]]

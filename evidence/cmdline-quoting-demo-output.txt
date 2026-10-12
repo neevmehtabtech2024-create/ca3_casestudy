@@ -1,0 +1,2 @@
+Click 8.2.1 command line: explorer "/select,C:\Users\Public\click demo"
+Click 8.4.1 command line: explorer /select, "C:\Users\Public\click demo"

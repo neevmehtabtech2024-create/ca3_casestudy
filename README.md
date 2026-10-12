@@ -39,4 +39,4 @@ Observations come from one local Windows machine. We did not write the upstream 
 
 ## Team contribution allocation
 
-Division of work and contribution allocation: Neev Mehta – regression-test patch and final integration (30%); Shivam Dev – issue investigation and reproduction workflow (23%); Pranav Mangla – upstream pull-request and code-diff analysis (23%); Raghvendra Pathe – screenshots, evidence organization and report review (24%). All members should be able to explain the full case study.
+Division of work and contribution allocation: Neev Mehta – regression-test patch and final integration ; Shivam Dev – issue investigation and reproduction workflow ; Pranav Mangla – upstream pull-request and code-diff analysis ; Raghvendra Pathe – screenshots, evidence organization and report review . 

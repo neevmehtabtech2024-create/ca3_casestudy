@@ -17,7 +17,7 @@
 
 | Path | Contents |
 |---|---|
-| `report/Click_CA3_Case_Study_Report.docx` | Final report (screenshots embedded); `report/case-study-report.md` is the same text |
+| `report/Click_CA3_Case_Study_Report.docx` | Final report (screenshots embedded); `case-study-report.md` is the same text |
 | `reproduction/` | `click-demo.py` (Windows symptom), `cmdline-quoting-demo.py` (root cause, any OS) |
 | `contribution/` | Our regression-test patch for Click and how to apply/submit it |
 | `evidence/` | Screenshots and demo output, described in `evidence/README.md` |
